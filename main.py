@@ -7,12 +7,14 @@ import Jogador
 pygame.init()
 
 # Variaveis
-largura = 640
-altura = 480
+largura = 1236
+altura = 640
 tela = pygame.display.set_mode((largura, altura))
 todas_as_sprites = pygame.sprite.Group()
 jogador = Jogador.Jogador()
 todas_as_sprites.add(jogador)
+imagem_fundo = pygame.image.load('imagem_fundo\masmorra.jpg').convert()
+imagem_fundo = pygame.transform.scale(imagem_fundo, (largura, altura))
 relogio = pygame.time.Clock()
 
 # Game-Loop
@@ -25,7 +27,7 @@ while True:
             exit()
         if pygame.key.get_pressed()[K_d]:
             jogador.andar()
-            
+    tela.blit(imagem_fundo, (0, 0))        
     todas_as_sprites.draw(tela)
     todas_as_sprites.update()
     pygame.display.flip()
