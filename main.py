@@ -23,7 +23,7 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             exit()
-        if event.type == KEYDOWN:
+        if pygame.key.get_pressed()[K_d]:
             jogador.andar()
             
     todas_as_sprites.draw(tela)

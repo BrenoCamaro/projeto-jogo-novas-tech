@@ -25,6 +25,7 @@ class Jogador(pygame.sprite.Sprite):
     def update(self):
         if self.animar == True:
             self.atual += 0.5
+            self.rect.move_ip(3, 0)
             if self.atual >= len(self.sprites):
                 self.atual = 0
                 self.animar = False
