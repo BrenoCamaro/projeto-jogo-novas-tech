@@ -10,7 +10,9 @@ pygame.init()
 largura = 640
 altura = 480
 tela = pygame.display.set_mode((largura, altura))
+todas_as_sprites = pygame.sprite.Group()
 jogador = Jogador.Jogador()
+todas_as_sprites.add(jogador)
 relogio = pygame.time.Clock()
 
 # Game-Loop
@@ -21,7 +23,9 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             exit()
+        if event.type == KEYDOWN:
+            jogador.andar()
             
-    jogador.draw(tela)
-    jogador.update()
+    todas_as_sprites.draw(tela)
+    todas_as_sprites.update()
     pygame.display.flip()
