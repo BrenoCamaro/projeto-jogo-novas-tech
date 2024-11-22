@@ -45,6 +45,10 @@ while True:
     if TECLA[K_s] and POSICAO_Y_JOGADOR < ALTURA:
         POSICAO_Y_JOGADOR += 5
 
+    #Movimento do Alien
+    LARGURA -= 2
+    POSICAO_X_ALIEN -= 1
+
     TELA.blit(ALIEN_IMG, (POSICAO_X_ALIEN, POSICAO_Y_ALIEN))
     TELA.blit(JOGADOR_IMG, (POSICAO_X_JOGADOR, POSICAO_Y_JOGADOR))
     pygame.display.update()
