@@ -1,5 +1,6 @@
 import pygame
 import  sys
+import random
 from pygame.locals import *
 
 pygame.init()
@@ -23,6 +24,11 @@ POSICAO_Y_JOGADOR = 300
 
 pygame.display.set_caption("Space Journey")
 
+#Função que defini o respawn dos aliens
+def respawn():
+    x = 1350
+    y = random.randint(1, 640)
+    return [x, y]
 
 while True:
     for event in pygame.event.get():
@@ -45,6 +51,11 @@ while True:
     if TECLA[K_s] and POSICAO_Y_JOGADOR < ALTURA:
         POSICAO_Y_JOGADOR += 5
 
+    #Respawn do Alien
+    if POSICAO_X_ALIEN == 50:
+        POSICAO_X_ALIEN = respawn()[0]
+        POSICAO_Y_ALIEN = respawn()[1]
+        
     #Movimento do Alien
     LARGURA -= 2
     POSICAO_X_ALIEN -= 1
