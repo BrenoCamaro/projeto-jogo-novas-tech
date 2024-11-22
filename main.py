@@ -1,19 +1,18 @@
-# Bibliotecas utilizadas 
 import pygame
+import  sys
 from pygame.locals import *
-from sys import exit
 
 pygame.init()
 
-# Variaveis
-largura = 640
-altura = 480
-tela = pygame.display.set_mode((largura, altura))
+LARGURA = 1000
+ALTURA = 667
+TELA = pygame.display.set_mode((LARGURA, ALTURA))
+pygame.display.set_caption("Space Journey")
 
-# Game-Loop
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
-            exit()
-    pygame.display.flip()
+            sys.exit()
+    pygame.display.update()
+            
