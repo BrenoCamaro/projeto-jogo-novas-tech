@@ -38,6 +38,13 @@ while True:
         TELA.blit(IMAGEM_FUNDO, (rel_x, 0))
     LARGURA -= 2
 
+    #Controles
+    TECLA = pygame.key.get_pressed()
+    if TECLA[K_w] and POSICAO_Y_JOGADOR > 1:
+        POSICAO_Y_JOGADOR -= 5
+    if TECLA[K_s] and POSICAO_Y_JOGADOR < ALTURA:
+        POSICAO_Y_JOGADOR += 5
+
     TELA.blit(ALIEN_IMG, (POSICAO_X_ALIEN, POSICAO_Y_ALIEN))
     TELA.blit(JOGADOR_IMG, (POSICAO_X_JOGADOR, POSICAO_Y_JOGADOR))
     pygame.display.update()
