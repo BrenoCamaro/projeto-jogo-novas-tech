@@ -33,6 +33,10 @@ POSICAO_Y_MUNICAO = 300
 
 GATILHO = False
 
+PONTOS = 10
+pygame.font.init()
+
+
 #Definindo retângulo nas imagens para colisões
 JOGADOR_IMG_RECT = JOGADOR_IMG.get_rect()
 ALIEN_IMG_RECT = ALIEN_IMG.get_rect()
@@ -51,8 +55,22 @@ def respawn_municao():
     GATILHO = False
     respawn_municao_x = POSICAO_X_JOGADOR
     respawn_municao_y = POSICAO_Y_JOGADOR
-    VELOCIDADE_X_MUNICAO = 0
-    return [respawn_municao_x, respawn_municao_y, GATILHO, VELOCIDADE_X_MUNICAO]
+    velocidade_x_municao = 0
+    return [respawn_municao_x, respawn_municao_y, GATILHO, velocidade_x_municao]
+
+#Função de colisão
+def colisao():
+    global PONTOS
+
+    if JOGADOR_IMG_RECT.colliderect(ALIEN_IMG_RECT) or ALIEN_IMG_RECT.x == 60:
+        PONTOS -= 1
+        return True
+    elif MUNICAO_RECT.colliderect(ALIEN_IMG_RECT):
+        PONTOS += 1
+        return True
+    else:
+        return False
+
 
 while True:
     for event in pygame.event.get():
@@ -95,6 +113,10 @@ while True:
     if POSICAO_X_MUNICAO == 1000:
         POSICAO_X_MUNICAO, POSICAO_Y_MUNICAO, GATILHO, VELOCIDADE_X_MUNICAO = respawn_municao()
 
+    if POSICAO_X_ALIEN == 50 or colisao():
+        POSICAO_X_ALIEN = respawn()[0]
+        POSICAO_Y_ALIEN = respawn()[1]
+
     #Posicao dos retangulos das imagens (Jogador, Alien, Municao)
     JOGADOR_IMG_RECT.y = POSICAO_Y_JOGADOR
     JOGADOR_IMG_RECT.x = POSICAO_X_JOGADOR
@@ -119,5 +141,10 @@ while True:
     TELA.blit(ALIEN_IMG, (POSICAO_X_ALIEN, POSICAO_Y_ALIEN))
     TELA.blit(MUNICAO, (POSICAO_X_MUNICAO, POSICAO_Y_MUNICAO))
     TELA.blit(JOGADOR_IMG, (POSICAO_X_JOGADOR, POSICAO_Y_JOGADOR))
+    
+    FONTE = pygame.font.Font(None, 36) 
+    PONTUACAO_TEXTO = FONTE.render(f"Pontos: {PONTOS}", True, (255, 255, 255))
+
+    TELA.blit(PONTUACAO_TEXTO, (10, 10))
+
     pygame.display.update()
-            
