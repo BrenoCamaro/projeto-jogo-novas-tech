@@ -4,6 +4,9 @@ import random
 from pygame.locals import *
 
 pygame.init()
+pygame.font.init()
+
+RODANDO = True
 
 LARGURA = 1000
 ALTURA = 667
@@ -33,8 +36,8 @@ POSICAO_Y_MUNICAO = 300
 
 GATILHO = False
 
-PONTOS = 10
-pygame.font.init()
+PONTOS = 2
+
 
 
 #Definindo retângulo nas imagens para colisões
@@ -72,7 +75,7 @@ def colisao():
         return False
 
 
-while True:
+while RODANDO:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -104,6 +107,8 @@ while True:
         GATILHO = True
         VELOCIDADE_X_MUNICAO = 8
 
+    if PONTOS == -1:
+        RODANDO = False
     #Respawn do Alien
     if POSICAO_X_ALIEN == 50:
         POSICAO_X_ALIEN = respawn()[0]
@@ -141,7 +146,7 @@ while True:
     TELA.blit(ALIEN_IMG, (POSICAO_X_ALIEN, POSICAO_Y_ALIEN))
     TELA.blit(MUNICAO, (POSICAO_X_MUNICAO, POSICAO_Y_MUNICAO))
     TELA.blit(JOGADOR_IMG, (POSICAO_X_JOGADOR, POSICAO_Y_JOGADOR))
-    
+
     FONTE = pygame.font.Font(None, 36) 
     PONTUACAO_TEXTO = FONTE.render(f"Pontos: {PONTOS}", True, (255, 255, 255))
 
