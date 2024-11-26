@@ -5,6 +5,7 @@ from pygame.locals import *
 from alien import Alien
 from jogador import Jogador
 from municaoDaNave import MunicaoDaNave
+from colisao import Colisao
 
 pygame.init()
 
@@ -17,27 +18,14 @@ ALTURA = 667
 TELA = pygame.display.set_mode((LARGURA, ALTURA))
 IMAGEM_FUNDO = pygame.image.load("imagens/1.jpg").convert_alpha()
 IMAGEM_FUNDO = pygame.transform.scale(IMAGEM_FUNDO, (LARGURA, ALTURA))
-PONTOS = 2
 pygame.display.set_caption("Space Journey")
 
 alien = Alien()
 jogador = Jogador()
 municao = MunicaoDaNave()
+colisao = Colisao()
+
 GATILHO = False
-
-#Função de colisão
-def colisao():
-    global PONTOS
-
-    if jogador.retanguloDaImagem.colliderect(alien.retanguloDaImagem) or alien.retanguloDaImagem.x == 60:
-        PONTOS -= 1
-        return True
-    elif municao.retanguloDaImagem.colliderect(alien.retanguloDaImagem):
-        PONTOS += 1
-        return True
-    else:
-        return False
-
 
 while RODANDO:
     for event in pygame.event.get():
@@ -71,7 +59,7 @@ while RODANDO:
         GATILHO = True
         municao.velocidade = 8
 
-    if PONTOS == -1:
+    if colisao.pontuacao == -1:
         RODANDO = False
     #Respawn do Alien
     if alien.coordenadaX == 50:
@@ -82,7 +70,7 @@ while RODANDO:
     if municao.coordenadaX == 1000:
         municao.coordenadaX, municao.coordenadaY, GATILHO, municao.velocidade = municao.municaoRespawn(jogador)
 
-    if alien.coordenadaX == 50 or colisao():
+    if alien.coordenadaX == 50 or colisao.colisao(jogador, alien, municao):
         alien.coordenadaX = alien.AlienRespawn()[0]
         alien.coordenadaY = alien.AlienRespawn()[1]
 
@@ -112,7 +100,7 @@ while RODANDO:
     TELA.blit(jogador.imagem, (jogador.coordenadaX, jogador.coordenadaY))
 
     FONTE = pygame.font.Font(None, 36) 
-    PONTUACAO_TEXTO = FONTE.render(f"Pontos: {PONTOS}", True, (255, 255, 255))
+    PONTUACAO_TEXTO = FONTE.render(f"Pontos: {colisao.pontuacao}", True, (255, 255, 255))
 
     TELA.blit(PONTUACAO_TEXTO, (10, 10))
 
