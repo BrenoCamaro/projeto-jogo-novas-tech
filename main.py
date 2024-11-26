@@ -3,6 +3,7 @@ import  sys
 import random
 from pygame.locals import *
 from alien import Alien
+from jogador import Jogador
 
 pygame.init()
 
@@ -18,16 +19,18 @@ IMAGEM_FUNDO = pygame.transform.scale(IMAGEM_FUNDO, (LARGURA, ALTURA))
 PONTOS = 2
 pygame.display.set_caption("Space Journey")
 
-#Classe Alien
 alien = Alien()
+jogador = Jogador()
 
 #Classe Jogador
+'''
 JOGADOR_IMG = pygame.image.load("imagens/spaceship (1).png").convert_alpha()
 JOGADOR_IMG = pygame.transform.scale(JOGADOR_IMG, (50, 50))
 JOGADOR_IMG = pygame.transform.rotate(JOGADOR_IMG, -90)
 POSICAO_X_JOGADOR = 200
 POSICAO_Y_JOGADOR = 300
 JOGADOR_IMG_RECT = JOGADOR_IMG.get_rect()
+'''
 
 #Classe Munição
 MUNICAO = pygame.image.load("imagens/bullet.png").convert_alpha()
@@ -41,8 +44,8 @@ MUNICAO_RECT = MUNICAO.get_rect()
 #Função de respawn da Municao
 def respawn_municao():
     gatilho = False
-    respawn_municao_x = POSICAO_X_JOGADOR
-    respawn_municao_y = POSICAO_Y_JOGADOR
+    respawn_municao_x = jogador.coordenadaX
+    respawn_municao_y = jogador.coordenadaY
     velocidade_x_municao = 0
     return [respawn_municao_x, respawn_municao_y, gatilho, velocidade_x_municao]
 
@@ -50,7 +53,7 @@ def respawn_municao():
 def colisao():
     global PONTOS
 
-    if JOGADOR_IMG_RECT.colliderect(alien.retanguloDaImagem) or alien.retanguloDaImagem.x == 60:
+    if jogador.retanguloDaImagem.colliderect(alien.retanguloDaImagem) or alien.retanguloDaImagem.x == 60:
         PONTOS -= 1
         return True
     elif MUNICAO_RECT.colliderect(alien.retanguloDaImagem):
@@ -76,14 +79,14 @@ while RODANDO:
 
     #Controles
     TECLA = pygame.key.get_pressed()
-    if TECLA[K_w] and POSICAO_Y_JOGADOR > 1:
-        POSICAO_Y_JOGADOR -= 5
+    if TECLA[K_w] and jogador.coordenadaY > 1:
+        jogador.coordenadaY -= 5
 
         if not GATILHO:
             POSICAO_Y_MUNICAO -= 5
 
-    if TECLA[K_s] and POSICAO_Y_JOGADOR < ALTURA:
-        POSICAO_Y_JOGADOR += 5
+    if TECLA[K_s] and jogador.coordenadaY < ALTURA:
+        jogador.coordenadaY += 5
 
         if not GATILHO:
             POSICAO_Y_MUNICAO += 5
@@ -108,8 +111,8 @@ while RODANDO:
         alien.coordenadaY = alien.AlienRespawn()[1]
 
     #Posicao dos retangulos das imagens (Jogador, Alien, Municao)
-    JOGADOR_IMG_RECT.y = POSICAO_Y_JOGADOR
-    JOGADOR_IMG_RECT.x = POSICAO_X_JOGADOR
+    jogador.retanguloDaImagem.y = jogador.coordenadaY
+    jogador.retanguloDaImagem.x = jogador.coordenadaX
 
     alien.retanguloDaImagem.y = alien.coordenadaY
     alien.retanguloDaImagem.x = alien.coordenadaX
@@ -124,13 +127,13 @@ while RODANDO:
     #Movimento da Bala
     POSICAO_X_MUNICAO += VELOCIDADE_X_MUNICAO
 
-    pygame.draw.rect(TELA, (255,0, 0), JOGADOR_IMG_RECT, 4)
+    pygame.draw.rect(TELA, (255,0, 0), jogador.retanguloDaImagem, 4)
     pygame.draw.rect(TELA, (255,0, 0), MUNICAO_RECT, 4)
     pygame.draw.rect(TELA, (255,0, 0), alien.retanguloDaImagem, 4)
 
     TELA.blit(alien.imagem, (alien.coordenadaX, alien.coordenadaY))
     TELA.blit(MUNICAO, (POSICAO_X_MUNICAO, POSICAO_Y_MUNICAO))
-    TELA.blit(JOGADOR_IMG, (POSICAO_X_JOGADOR, POSICAO_Y_JOGADOR))
+    TELA.blit(jogador.imagem, (jogador.coordenadaX, jogador.coordenadaY))
 
     FONTE = pygame.font.Font(None, 36) 
     PONTUACAO_TEXTO = FONTE.render(f"Pontos: {PONTOS}", True, (255, 255, 255))
