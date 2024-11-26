@@ -19,13 +19,6 @@ PONTOS = 2
 pygame.display.set_caption("Space Journey")
 
 #Classe Alien
-'''
-ALIEN_IMG = pygame.image.load("imagens/aircraft.png").convert_alpha()
-ALIEN_IMG = pygame.transform.scale(ALIEN_IMG, (50, 50))
-POSICAO_X_ALIEN = 500
-POSICAO_Y_ALIEN = 300
-ALIEN_IMG_RECT = ALIEN_IMG.get_rect()
-'''
 alien = Alien()
 
 #Classe Jogador
@@ -44,13 +37,6 @@ POSICAO_X_MUNICAO = 200
 POSICAO_Y_MUNICAO = 300
 GATILHO = False
 MUNICAO_RECT = MUNICAO.get_rect()
-
-
-#Função que defini o respawn dos aliens
-def respawn():
-    x = 600
-    y = random.randint(1, 640)
-    return [x, y]
 
 #Função de respawn da Municao
 def respawn_municao():
@@ -110,16 +96,16 @@ while RODANDO:
         RODANDO = False
     #Respawn do Alien
     if alien.coordenadaX == 50:
-        alien.coordenadaX = respawn()[0]
-        alien.coordenadaY = respawn()[1]
+        alien.coordenadaX = alien.AlienRespawn()[0]
+        alien.coordenadaY = alien.AlienRespawn()[1]
 
     #Respawn da Municao
     if POSICAO_X_MUNICAO == 1000:
         POSICAO_X_MUNICAO, POSICAO_Y_MUNICAO, GATILHO, VELOCIDADE_X_MUNICAO = respawn_municao()
 
     if alien.coordenadaX == 50 or colisao():
-        alien.coordenadaX = respawn()[0]
-        alien.coordenadaY = respawn()[1]
+        alien.coordenadaX = alien.AlienRespawn()[0]
+        alien.coordenadaY = alien.AlienRespawn()[1]
 
     #Posicao dos retangulos das imagens (Jogador, Alien, Municao)
     JOGADOR_IMG_RECT.y = POSICAO_Y_JOGADOR
