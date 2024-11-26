@@ -4,62 +4,58 @@ import random
 from pygame.locals import *
 
 pygame.init()
-pygame.font.init()
 
 RODANDO = True
 
+#Configurações de Tela
+pygame.font.init()
 LARGURA = 1000
 ALTURA = 667
 TELA = pygame.display.set_mode((LARGURA, ALTURA))
 IMAGEM_FUNDO = pygame.image.load("imagens/1.jpg").convert_alpha()
 IMAGEM_FUNDO = pygame.transform.scale(IMAGEM_FUNDO, (LARGURA, ALTURA))
+PONTOS = 2
+pygame.display.set_caption("Space Journey")
 
+#Classe Alien
 ALIEN_IMG = pygame.image.load("imagens/aircraft.png").convert_alpha()
 ALIEN_IMG = pygame.transform.scale(ALIEN_IMG, (50, 50))
 POSICAO_X_ALIEN = 500
 POSICAO_Y_ALIEN = 300
+ALIEN_IMG_RECT = ALIEN_IMG.get_rect()
 
+
+#Classe Jogador
 JOGADOR_IMG = pygame.image.load("imagens/spaceship (1).png").convert_alpha()
 JOGADOR_IMG = pygame.transform.scale(JOGADOR_IMG, (50, 50))
 JOGADOR_IMG = pygame.transform.rotate(JOGADOR_IMG, -90)
 POSICAO_X_JOGADOR = 200
 POSICAO_Y_JOGADOR = 300
+JOGADOR_IMG_RECT = JOGADOR_IMG.get_rect()
 
-
+#Classe Munição
 MUNICAO = pygame.image.load("imagens/bullet.png").convert_alpha()
 MUNICAO = pygame.transform.scale(MUNICAO, (25, 25))
-
-
 VELOCIDADE_X_MUNICAO = 0
 POSICAO_X_MUNICAO = 200
 POSICAO_Y_MUNICAO = 300
-
 GATILHO = False
-
-PONTOS = 2
-
-
-
-#Definindo retângulo nas imagens para colisões
-JOGADOR_IMG_RECT = JOGADOR_IMG.get_rect()
-ALIEN_IMG_RECT = ALIEN_IMG.get_rect()
 MUNICAO_RECT = MUNICAO.get_rect()
 
-pygame.display.set_caption("Space Journey")
 
 #Função que defini o respawn dos aliens
 def respawn():
-    x = 1350
+    x = 600
     y = random.randint(1, 640)
     return [x, y]
 
 #Função de respawn da Municao
 def respawn_municao():
-    GATILHO = False
+    gatilho = False
     respawn_municao_x = POSICAO_X_JOGADOR
     respawn_municao_y = POSICAO_Y_JOGADOR
     velocidade_x_municao = 0
-    return [respawn_municao_x, respawn_municao_y, GATILHO, velocidade_x_municao]
+    return [respawn_municao_x, respawn_municao_y, gatilho, velocidade_x_municao]
 
 #Função de colisão
 def colisao():
