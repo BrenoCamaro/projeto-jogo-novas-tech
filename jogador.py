@@ -11,3 +11,4 @@ class Jogador():
         self.coordenadaX = 200
         self.coordenadaY = 300
         self.retanguloDaImagem = self.imagem.get_rect()
+        self.atirar = False
