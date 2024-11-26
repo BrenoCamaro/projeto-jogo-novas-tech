@@ -11,3 +11,10 @@ class MunicaoDaNave():
         self.coordenadaX = 200
         self.coordenadaY = 300
         self.retanguloDaImagem = self.imagem.get_rect()
+
+    def municaoRespawn(self, jogador):
+        gatilho = False
+        respawnMunicaoX = jogador.coordenadaX
+        respawnMunicaoY = jogador.coordenadaY
+        velocidade = 0
+        return [respawnMunicaoX, respawnMunicaoY, gatilho, velocidade]

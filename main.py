@@ -23,25 +23,7 @@ pygame.display.set_caption("Space Journey")
 alien = Alien()
 jogador = Jogador()
 municao = MunicaoDaNave()
-
-#Classe Munição
-'''
-MUNICAO = pygame.image.load("imagens/bullet.png").convert_alpha()
-MUNICAO = pygame.transform.scale(MUNICAO, (25, 25))
-VELOCIDADE_X_MUNICAO = 0
-POSICAO_X_MUNICAO = 200
-POSICAO_Y_MUNICAO = 300
-MUNICAO_RECT = MUNICAO.get_rect()
-'''
 GATILHO = False
-
-#Função de respawn da Municao
-def respawn_municao():
-    gatilho = False
-    respawn_municao_x = jogador.coordenadaX
-    respawn_municao_y = jogador.coordenadaY
-    velocidade_x_municao = 0
-    return [respawn_municao_x, respawn_municao_y, gatilho, velocidade_x_municao]
 
 #Função de colisão
 def colisao():
@@ -98,7 +80,7 @@ while RODANDO:
 
     #Respawn da Municao
     if municao.coordenadaX == 1000:
-        municao.coordenadaX, municao.coordenadaY, GATILHO, municao.velocidade = respawn_municao()
+        municao.coordenadaX, municao.coordenadaY, GATILHO, municao.velocidade = municao.municaoRespawn(jogador)
 
     if alien.coordenadaX == 50 or colisao():
         alien.coordenadaX = alien.AlienRespawn()[0]
