@@ -6,24 +6,29 @@ from alien import Alien
 from jogador import Jogador
 from municaoDaNave import MunicaoDaNave
 from colisao import Colisao
+from configuracoes import Configuraoces as Config
 
 pygame.init()
 
 RODANDO = True
 
-#Configurações de Tela
-pygame.font.init()
-LARGURA = 1000
-ALTURA = 667
-TELA = pygame.display.set_mode((LARGURA, ALTURA))
-IMAGEM_FUNDO = pygame.image.load("imagens/1.jpg").convert_alpha()
-IMAGEM_FUNDO = pygame.transform.scale(IMAGEM_FUNDO, (LARGURA, ALTURA))
-pygame.display.set_caption("Space Journey")
-
+config = Config()
 alien = Alien()
 jogador = Jogador()
 municao = MunicaoDaNave()
 colisao = Colisao()
+
+
+#Configurações de Tela
+pygame.font.init()
+#LARGURA = 1000
+ALTURA = 667
+TELA = pygame.display.set_mode((config.largura, ALTURA))
+IMAGEM_FUNDO = pygame.image.load("imagens/1.jpg").convert_alpha()
+IMAGEM_FUNDO = pygame.transform.scale(IMAGEM_FUNDO, (config.largura, ALTURA))
+pygame.display.set_caption("Space Journey")
+
+
 
 GATILHO = False
 
@@ -35,11 +40,11 @@ while RODANDO:
     TELA.blit(IMAGEM_FUNDO, (0, 0))
 
     #Criando movimento da tela de fundo
-    rel_x = LARGURA % IMAGEM_FUNDO.get_rect().width
+    rel_x = config.largura % IMAGEM_FUNDO.get_rect().width
     TELA.blit(IMAGEM_FUNDO, (rel_x - IMAGEM_FUNDO.get_rect().width, 0))
-    if rel_x < LARGURA:
+    if rel_x < config.largura:
         TELA.blit(IMAGEM_FUNDO, (rel_x, 0))
-    LARGURA -= 2
+    config.largura -= 2
 
     #Controles
     TECLA = pygame.key.get_pressed()
@@ -85,7 +90,7 @@ while RODANDO:
     municao.retanguloDaImagem.x = municao.coordenadaX
         
     #Movimento do Alien
-    LARGURA -= 2
+    config.largura -= 2
     alien.coordenadaX -= 1
 
     #Movimento da Bala
