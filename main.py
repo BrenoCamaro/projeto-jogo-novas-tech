@@ -7,6 +7,8 @@ from jogador import Jogador
 from municaoDaNave import MunicaoDaNave
 from colisao import Colisao
 from configuracoes import Configuraoces as Config
+import PIL
+from PIL import Image
 
 pygame.init()
 
