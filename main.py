@@ -5,39 +5,34 @@ from pygame.locals import *
 from alien import Alien
 from jogador import Jogador
 from municaoDaNave import MunicaoDaNave
+from colisao import Colisao
+from configuracoes import Configuraoces as Config
+import PIL
+from PIL import Image
 
 pygame.init()
 
 RODANDO = True
 
-#Configurações de Tela
-pygame.font.init()
-LARGURA = 1000
-ALTURA = 667
-TELA = pygame.display.set_mode((LARGURA, ALTURA))
-IMAGEM_FUNDO = pygame.image.load("imagens/1.jpg").convert_alpha()
-IMAGEM_FUNDO = pygame.transform.scale(IMAGEM_FUNDO, (LARGURA, ALTURA))
-PONTOS = 2
-pygame.display.set_caption("Space Journey")
-
+config = Config()
 alien = Alien()
 jogador = Jogador()
 municao = MunicaoDaNave()
+colisao = Colisao()
+
+
+#Configurações de Tela
+pygame.font.init()
+#LARGURA = 1000
+ALTURA = 667
+TELA = pygame.display.set_mode((config.largura, ALTURA))
+IMAGEM_FUNDO = pygame.image.load("imagens/1.jpg").convert_alpha()
+IMAGEM_FUNDO = pygame.transform.scale(IMAGEM_FUNDO, (config.largura, ALTURA))
+pygame.display.set_caption("Space Journey")
+
+
+
 GATILHO = False
-
-#Função de colisão
-def colisao():
-    global PONTOS
-
-    if jogador.retanguloDaImagem.colliderect(alien.retanguloDaImagem) or alien.retanguloDaImagem.x == 60:
-        PONTOS -= 1
-        return True
-    elif municao.retanguloDaImagem.colliderect(alien.retanguloDaImagem):
-        PONTOS += 1
-        return True
-    else:
-        return False
-
 
 while RODANDO:
     for event in pygame.event.get():
@@ -47,11 +42,11 @@ while RODANDO:
     TELA.blit(IMAGEM_FUNDO, (0, 0))
 
     #Criando movimento da tela de fundo
-    rel_x = LARGURA % IMAGEM_FUNDO.get_rect().width
+    rel_x = config.largura % IMAGEM_FUNDO.get_rect().width
     TELA.blit(IMAGEM_FUNDO, (rel_x - IMAGEM_FUNDO.get_rect().width, 0))
-    if rel_x < LARGURA:
+    if rel_x < config.largura:
         TELA.blit(IMAGEM_FUNDO, (rel_x, 0))
-    LARGURA -= 2
+    config.largura -= 2
 
     #Controles
     TECLA = pygame.key.get_pressed()
@@ -71,7 +66,7 @@ while RODANDO:
         GATILHO = True
         municao.velocidade = 8
 
-    if PONTOS == -1:
+    if colisao.pontuacao == -1:
         RODANDO = False
     #Respawn do Alien
     if alien.coordenadaX == 50:
@@ -82,7 +77,7 @@ while RODANDO:
     if municao.coordenadaX == 1000:
         municao.coordenadaX, municao.coordenadaY, GATILHO, municao.velocidade = municao.municaoRespawn(jogador)
 
-    if alien.coordenadaX == 50 or colisao():
+    if alien.coordenadaX == 50 or colisao.colisao(jogador, alien, municao):
         alien.coordenadaX = alien.AlienRespawn()[0]
         alien.coordenadaY = alien.AlienRespawn()[1]
 
@@ -97,7 +92,7 @@ while RODANDO:
     municao.retanguloDaImagem.x = municao.coordenadaX
         
     #Movimento do Alien
-    LARGURA -= 2
+    config.largura -= 2
     alien.coordenadaX -= 1
 
     #Movimento da Bala
@@ -112,7 +107,7 @@ while RODANDO:
     TELA.blit(jogador.imagem, (jogador.coordenadaX, jogador.coordenadaY))
 
     FONTE = pygame.font.Font(None, 36) 
-    PONTUACAO_TEXTO = FONTE.render(f"Pontos: {PONTOS}", True, (255, 255, 255))
+    PONTUACAO_TEXTO = FONTE.render(f"Pontos: {colisao.pontuacao}", True, (255, 255, 255))
 
     TELA.blit(PONTUACAO_TEXTO, (10, 10))
 
