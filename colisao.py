@@ -1,6 +1,6 @@
 class Colisao():
     def __init__(self):
-        self.pontuacao = 1
+        self.pontuacao = 10
 
     def colisao(self, jogador, alien, municao,):
         if jogador.retanguloDaImagem.colliderect(alien.retanguloDaImagem) or alien.retanguloDaImagem.x == 60:

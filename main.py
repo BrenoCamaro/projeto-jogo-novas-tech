@@ -93,12 +93,11 @@ while RODANDO:
     config.largura -= 2
     alien.coordenadaX -= 1
 
+    if colisao.pontuacao > 15:
+        alien.coordenadaX -= 2
+
     #Movimento da Bala
     municao.coordenadaX += municao.velocidade
-
-    pygame.draw.rect(TELA, (255,0, 0), jogador.retanguloDaImagem, 4)
-    pygame.draw.rect(TELA, (255,0, 0), municao.retanguloDaImagem, 4)
-    pygame.draw.rect(TELA, (255,0, 0), alien.retanguloDaImagem, 4)
 
     TELA.blit(alien.imagem, (alien.coordenadaX, alien.coordenadaY))
     TELA.blit(municao.imagem, (municao.coordenadaX, municao.coordenadaY))
