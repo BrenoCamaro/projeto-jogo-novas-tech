@@ -5,7 +5,7 @@ from pygame.locals import *
 
 class Configuraoces():
     def __init__(self):
-        self.largura = 1000
+        self.largura = 1280
         self.altura = 667
         self.tela = pygame.display.set_mode((self.largura, self.altura))
         self.imagemDeFundo = pygame.image.load("imagens/1.jpg").convert_alpha()

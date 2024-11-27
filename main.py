@@ -7,8 +7,6 @@ from jogador import Jogador
 from municaoDaNave import MunicaoDaNave
 from colisao import Colisao
 from configuracoes import Configuraoces as Config
-import PIL
-from PIL import Image
 
 pygame.init()
 
@@ -24,9 +22,9 @@ colisao = Colisao()
 #Configurações de Tela
 pygame.font.init()
 #LARGURA = 1000
-ALTURA = 667
+ALTURA = 720
 TELA = pygame.display.set_mode((config.largura, ALTURA))
-IMAGEM_FUNDO = pygame.image.load("imagens/1.jpg").convert_alpha()
+IMAGEM_FUNDO = pygame.image.load("imagens/estrelas.png").convert_alpha()
 IMAGEM_FUNDO = pygame.transform.scale(IMAGEM_FUNDO, (config.largura, ALTURA))
 pygame.display.set_caption("Space Journey")
 
@@ -44,9 +42,9 @@ while RODANDO:
     #Criando movimento da tela de fundo
     rel_x = config.largura % IMAGEM_FUNDO.get_rect().width
     TELA.blit(IMAGEM_FUNDO, (rel_x - IMAGEM_FUNDO.get_rect().width, 0))
-    if rel_x < config.largura:
+    if rel_x < 1280:
         TELA.blit(IMAGEM_FUNDO, (rel_x, 0))
-    config.largura -= 2
+    config.largura -= 0.1
 
     #Controles
     TECLA = pygame.key.get_pressed()
