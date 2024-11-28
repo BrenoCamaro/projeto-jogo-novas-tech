@@ -95,7 +95,7 @@ while RODANDO:
 
     if colisao.pontuacao <= 5:
         alien.coordenadaX -= 0.3
-    elif colisao.pontuacao == 10:
+    elif 10 <= colisao.pontuacao <= 13:
         alien.coordenadaX -= 1
     elif colisao.pontuacao == 14:
         alien.coordenadaX -= 2
