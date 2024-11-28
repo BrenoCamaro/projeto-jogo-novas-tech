@@ -7,7 +7,7 @@ class Colisao():
             self.pontuacao -= 1
             return True
         elif municao.retanguloDaImagem.colliderect(alien.retanguloDaImagem):
-            self.pontuacao += 1
+            self.pontuacao += 1 
             return True
         else:
             return False

@@ -91,10 +91,19 @@ while RODANDO:
         
     #Movimento do Alien
     config.largura -= 2
-    alien.coordenadaX -= 1
+    alien.coordenadaX -= 0.7
 
-    if colisao.pontuacao > 15:
+    if colisao.pontuacao <= 5:
+        alien.coordenadaX -= 0.3
+    elif colisao.pontuacao == 7:
+        alien.coordenadaX -= 1
+    elif colisao.pontuacao == 10:
         alien.coordenadaX -= 2
+    elif colisao.pontuacao == 12:
+        alien.coordenadaX -= 2.5
+    elif colisao.pontuacao >= 15:
+        alien.coordenadaX -= 3
+        
 
     #Movimento da Bala
     municao.coordenadaX += municao.velocidade
