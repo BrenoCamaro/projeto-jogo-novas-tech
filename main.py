@@ -95,14 +95,14 @@ while RODANDO:
 
     if colisao.pontuacao <= 5:
         alien.coordenadaX -= 0.3
-    elif colisao.pontuacao == 7:
-        alien.coordenadaX -= 1
     elif colisao.pontuacao == 10:
+        alien.coordenadaX -= 1
+    elif colisao.pontuacao == 14:
         alien.coordenadaX -= 2
-    elif colisao.pontuacao == 12:
+    elif colisao.pontuacao == 17:
         alien.coordenadaX -= 2.5
-    elif colisao.pontuacao >= 15:
-        alien.coordenadaX -= 3
+    elif colisao.pontuacao >= 19:
+        alien.coordenadaX -= 30
         
 
     #Movimento da Bala
