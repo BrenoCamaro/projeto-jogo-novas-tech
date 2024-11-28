@@ -97,9 +97,9 @@ while RODANDO:
         alien.coordenadaX -= 0.3
     elif 10 <= colisao.pontuacao <= 13:
         alien.coordenadaX -= 1
-    elif colisao.pontuacao == 14:
+    elif 14 <=colisao.pontuacao <= 16:
         alien.coordenadaX -= 2
-    elif colisao.pontuacao == 17:
+    elif 17 <=colisao.pontuacao <= 18:
         alien.coordenadaX -= 2.5
     elif colisao.pontuacao >= 19:
         alien.coordenadaX -= 30
