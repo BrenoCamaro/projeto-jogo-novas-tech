@@ -102,7 +102,7 @@ while RODANDO:
     elif 17 <=colisao.pontuacao <= 18:
         alien.coordenadaX -= 2.5
     elif colisao.pontuacao >= 19:
-        alien.coordenadaX -= 30
+        alien.coordenadaX -= 3
         
 
     #Movimento da Bala
