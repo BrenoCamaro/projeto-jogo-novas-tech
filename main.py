@@ -53,7 +53,7 @@ while RODANDO:
     if colisao.pontuacao == -1:
         RODANDO = False
 
-    alien.AlienRespawn(colisao, jogador, municao)
+    alien.alienRespawn(colisao, jogador, municao)
 
     #Respawn da Municao
     if municao.coordenadaX == 1000:
@@ -69,21 +69,8 @@ while RODANDO:
     municao.retanguloDaImagem.y = municao.coordenadaY
     municao.retanguloDaImagem.x = municao.coordenadaX
         
-    #Movimento do Alien
-    config.largura -= 2
-    alien.coordenadaX -= 0.7
+    alien.movimentacao(config, colisao)
 
-    if colisao.pontuacao <= 5:
-        alien.coordenadaX -= 0.3
-    elif 10 <= colisao.pontuacao <= 13:
-        alien.coordenadaX -= 1
-    elif 14 <=colisao.pontuacao <= 16:
-        alien.coordenadaX -= 2
-    elif 17 <=colisao.pontuacao <= 18:
-        alien.coordenadaX -= 2.5
-    elif colisao.pontuacao >= 19:
-        alien.coordenadaX -= 3
-        
     #Movimento da Bala
     municao.coordenadaX += municao.velocidade
 
