@@ -7,6 +7,7 @@ from jogador import Jogador
 from municaoDaNave import MunicaoDaNave
 from colisao import Colisao
 from configuracoes import Configuraoces as Config
+from controles import Controles
 
 pygame.init()
 pygame.font.init()
@@ -19,6 +20,7 @@ alien = Alien()
 jogador = Jogador()
 municao = MunicaoDaNave()
 colisao = Colisao()
+controle = Controles()
 
 while RODANDO:
     for event in pygame.event.get():
@@ -31,25 +33,12 @@ while RODANDO:
     config.animacaoTelaDeFundo()
 
     #Controles
-    TECLA = pygame.key.get_pressed()
-    if TECLA[K_w] and jogador.coordenadaY > 1:
-        jogador.coordenadaY -= 5
-
-        if not jogador.atirar:
-            municao.coordenadaY -= 5
-
-    if TECLA[K_s] and jogador.coordenadaY < config.altura:
-        jogador.coordenadaY += 5
-
-        if not jogador.atirar:
-            municao.coordenadaY += 5
-
-    if TECLA[K_SPACE]:
-        jogador.atirar = True
-        municao.velocidade = 8
+    tecla = pygame.key.get_pressed()
 
     if colisao.pontuacao == -1:
         RODANDO = False
+
+    controle.controlesDoJogo(jogador, municao, config, tecla)
 
     alien.alienRespawn(colisao, jogador, municao)
 
