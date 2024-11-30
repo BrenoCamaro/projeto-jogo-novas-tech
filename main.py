@@ -20,8 +20,6 @@ jogador = Jogador()
 municao = MunicaoDaNave()
 colisao = Colisao()
 
-GATILHO = False
-
 while RODANDO:
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -37,17 +35,17 @@ while RODANDO:
     if TECLA[K_w] and jogador.coordenadaY > 1:
         jogador.coordenadaY -= 5
 
-        if not GATILHO:
+        if not jogador.atirar:
             municao.coordenadaY -= 5
 
     if TECLA[K_s] and jogador.coordenadaY < config.altura:
         jogador.coordenadaY += 5
 
-        if not GATILHO:
+        if not jogador.atirar:
             municao.coordenadaY += 5
 
     if TECLA[K_SPACE]:
-        GATILHO = True
+        jogador.atirar = True
         municao.velocidade = 8
 
     if colisao.pontuacao == -1:
@@ -57,9 +55,8 @@ while RODANDO:
 
     #Respawn da Municao
     if municao.coordenadaX == 1000:
-        municao.coordenadaX, municao.coordenadaY, GATILHO, municao.velocidade = municao.municaoRespawn(jogador)
+        municao.coordenadaX, municao.coordenadaY, jogador.atirar, municao.velocidade = municao.municaoRespawn(jogador)
 
-    #Posicao dos retangulos das imagens (Jogador, Alien, Municao)
     jogador.retanguloDaImagem.y = jogador.coordenadaY
     jogador.retanguloDaImagem.x = jogador.coordenadaX
 
@@ -68,7 +65,7 @@ while RODANDO:
 
     municao.retanguloDaImagem.y = municao.coordenadaY
     municao.retanguloDaImagem.x = municao.coordenadaX
-        
+
     alien.movimentacao(config, colisao)
 
     #Movimento da Bala
