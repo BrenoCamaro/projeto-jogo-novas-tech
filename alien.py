@@ -3,8 +3,9 @@ import  sys
 import random
 from pygame.locals import *
 
-class Alien():
+class Alien(pygame.sprite.Sprite):
     def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
         self.imagem = pygame.image.load("imagens/spaceship.png").convert_alpha()
         self.imagem = pygame.transform.scale(self.imagem, (50, 50))
         self.coordenadaX = 500
