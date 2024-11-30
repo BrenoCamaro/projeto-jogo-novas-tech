@@ -9,6 +9,8 @@ from colisao import Colisao
 from configuracoes import Configuraoces as Config
 
 pygame.init()
+pygame.font.init()
+pygame.display.set_caption("Space Journey")
 
 RODANDO = True
 
@@ -18,18 +20,6 @@ jogador = Jogador()
 municao = MunicaoDaNave()
 colisao = Colisao()
 
-
-#Configurações de Tela
-pygame.font.init()
-#LARGURA = 1000
-ALTURA = 720
-TELA = pygame.display.set_mode((config.largura, ALTURA))
-IMAGEM_FUNDO = pygame.image.load("imagens/estrelas.png").convert_alpha()
-IMAGEM_FUNDO = pygame.transform.scale(IMAGEM_FUNDO, (config.largura, ALTURA))
-pygame.display.set_caption("Space Journey")
-
-
-
 GATILHO = False
 
 while RODANDO:
@@ -37,13 +27,13 @@ while RODANDO:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-    TELA.blit(IMAGEM_FUNDO, (0, 0))
+    config.tela.blit(config.imagemDeFundo, (0, 0))
 
     #Criando movimento da tela de fundo
-    rel_x = config.largura % IMAGEM_FUNDO.get_rect().width
-    TELA.blit(IMAGEM_FUNDO, (rel_x - IMAGEM_FUNDO.get_rect().width, 0))
+    rel_x = config.largura % config.imagemDeFundo.get_rect().width
+    config.tela.blit(config.imagemDeFundo, (rel_x - config.imagemDeFundo.get_rect().width, 0))
     if rel_x < 1280:
-        TELA.blit(IMAGEM_FUNDO, (rel_x, 0))
+        config.tela.blit(config.imagemDeFundo, (rel_x, 0))
     config.largura -= 0.1
 
     #Controles
@@ -54,7 +44,7 @@ while RODANDO:
         if not GATILHO:
             municao.coordenadaY -= 5
 
-    if TECLA[K_s] and jogador.coordenadaY < ALTURA:
+    if TECLA[K_s] and jogador.coordenadaY < config.altura:
         jogador.coordenadaY += 5
 
         if not GATILHO:
@@ -108,13 +98,13 @@ while RODANDO:
     #Movimento da Bala
     municao.coordenadaX += municao.velocidade
 
-    TELA.blit(alien.imagem, (alien.coordenadaX, alien.coordenadaY))
-    TELA.blit(municao.imagem, (municao.coordenadaX, municao.coordenadaY))
-    TELA.blit(jogador.imagem, (jogador.coordenadaX, jogador.coordenadaY))
+    config.tela.blit(alien.imagem, (alien.coordenadaX, alien.coordenadaY))
+    config.tela.blit(municao.imagem, (municao.coordenadaX, municao.coordenadaY))
+    config.tela.blit(jogador.imagem, (jogador.coordenadaX, jogador.coordenadaY))
 
     FONTE = pygame.font.Font(None, 36) 
     PONTUACAO_TEXTO = FONTE.render(f"Pontos: {colisao.pontuacao}", True, (255, 255, 255))
 
-    TELA.blit(PONTUACAO_TEXTO, (10, 10))
+    config.tela.blit(PONTUACAO_TEXTO, (10, 10))
 
     pygame.display.update()

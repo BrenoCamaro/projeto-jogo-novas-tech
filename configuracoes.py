@@ -8,5 +8,5 @@ class Configuraoces():
         self.largura = 1280
         self.altura = 667
         self.tela = pygame.display.set_mode((self.largura, self.altura))
-        self.imagemDeFundo = pygame.image.load("imagens/1.jpg").convert_alpha()
+        self.imagemDeFundo = pygame.image.load("imagens/estrelas.png").convert_alpha()
         self.imagemDeFundo = pygame.transform.scale(self.imagemDeFundo, (self.largura, self.altura))
