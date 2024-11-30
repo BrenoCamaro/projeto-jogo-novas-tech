@@ -8,9 +8,9 @@ from municaoDaNave import MunicaoDaNave
 from colisao import Colisao
 from configuracoes import Configuraoces as Config
 from controles import Controles
+from imprimindoTela import imprimindo
 
 pygame.init()
-pygame.font.init()
 pygame.display.set_caption("Space Journey")
 
 RODANDO = True
@@ -60,13 +60,6 @@ while RODANDO:
     #Movimento da Bala
     municao.coordenadaX += municao.velocidade
 
-    config.tela.blit(alien.imagem, (alien.coordenadaX, alien.coordenadaY))
-    config.tela.blit(municao.imagem, (municao.coordenadaX, municao.coordenadaY))
-    config.tela.blit(jogador.imagem, (jogador.coordenadaX, jogador.coordenadaY))
-
-    FONTE = pygame.font.Font(None, 36) 
-    PONTUACAO_TEXTO = FONTE.render(f"Pontos: {colisao.pontuacao}", True, (255, 255, 255))
-
-    config.tela.blit(PONTUACAO_TEXTO, (10, 10))
+    imprimindo(jogador, alien, municao, config, colisao)
 
     pygame.display.update()
