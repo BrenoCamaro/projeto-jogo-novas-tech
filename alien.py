@@ -11,8 +11,15 @@ class Alien():
         self.coordenadaY = 300
         self.retanguloDaImagem = self.imagem.get_rect()
 
-    def AlienRespawn(self):
+    def AlienRespawn(self, colisao, jogador, municao):
         coordenadaX = 1000
         coordenadaY = random.randint(1, 640)
-        return [coordenadaX, coordenadaY]
+
+        if self.coordenadaX == 50:
+            self.coordenadaX = coordenadaX
+            self.coordenadaY = coordenadaY
+
+        if self.coordenadaX == 50 or colisao.colisao(jogador, self, municao):
+            self.coordenadaX = coordenadaX
+            self.coordenadaY = coordenadaY
     

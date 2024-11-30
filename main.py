@@ -30,11 +30,7 @@ while RODANDO:
     config.tela.blit(config.imagemDeFundo, (0, 0))
 
     #Criando movimento da tela de fundo
-    rel_x = config.largura % config.imagemDeFundo.get_rect().width
-    config.tela.blit(config.imagemDeFundo, (rel_x - config.imagemDeFundo.get_rect().width, 0))
-    if rel_x < 1280:
-        config.tela.blit(config.imagemDeFundo, (rel_x, 0))
-    config.largura -= 0.1
+    config.animacaoTelaDeFundo()
 
     #Controles
     TECLA = pygame.key.get_pressed()
@@ -56,18 +52,12 @@ while RODANDO:
 
     if colisao.pontuacao == -1:
         RODANDO = False
-    #Respawn do Alien
-    if alien.coordenadaX == 50:
-        alien.coordenadaX = alien.AlienRespawn()[0]
-        alien.coordenadaY = alien.AlienRespawn()[1]
+
+    alien.AlienRespawn(colisao, jogador, municao)
 
     #Respawn da Municao
     if municao.coordenadaX == 1000:
         municao.coordenadaX, municao.coordenadaY, GATILHO, municao.velocidade = municao.municaoRespawn(jogador)
-
-    if alien.coordenadaX == 50 or colisao.colisao(jogador, alien, municao):
-        alien.coordenadaX = alien.AlienRespawn()[0]
-        alien.coordenadaY = alien.AlienRespawn()[1]
 
     #Posicao dos retangulos das imagens (Jogador, Alien, Municao)
     jogador.retanguloDaImagem.y = jogador.coordenadaY
@@ -94,7 +84,6 @@ while RODANDO:
     elif colisao.pontuacao >= 19:
         alien.coordenadaX -= 3
         
-
     #Movimento da Bala
     municao.coordenadaX += municao.velocidade
 
